@@ -1,5 +1,15 @@
 {% extends "base.html" %}
 
 {% block content %}
-    home
+    {% for post in object_list %}
+
+    <ul>
+        <li> {{post.title}} </li>
+        <li> {{post.description}} </li>
+
+    </ul>
+
+    <hr>
+
+    {% endfor%}
 {% endblock %}
