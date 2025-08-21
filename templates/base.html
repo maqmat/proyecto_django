@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Instagram</title>
+  <style>
+    /* Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #000;
+      color: white;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      height: 100vh;
+    }
+
+    /* Navbar fija, centrada, con ancho máximo como Instagram */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 935px;
+      height: 60px;
+      background-color: #1c1c1c;
+      border-bottom: 1px solid #262626;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
+      z-index: 1000;
+    }
+
+    /* Logo con gradiente real de Instagram */
+    .logo a {
+      font-size: 28px;
+      font-weight: 800;
+      text-decoration: none;
+      background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* Grupos de enlaces */
+    .nav-center, .nav-right {
+      display: flex;
+      gap: 32px;
+    }
+
+    .nav-center a, .nav-right a {
+      color: #e0e0e0;
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-center a:hover, .nav-right a:hover {
+      color: white;
+    }
+
+    /* Iconos simulados con CSS (cuadrados, círculos, etc) para reemplazar emojis */
+    .icon {
+      width: 24px;
+      height: 24px;
+      display: inline-block;
+    }
+
+    .home .icon {
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23e0e0e0' d='M21 10.3l-8.7-8.7a1 1 0 0 0-1.4 0l-8.7 8.7c-.6.6-.6 1.5 0 2.1l8.7 8.7c.6.6 1.5.6 2.1 0l8.7-8.7c.6-.6.6-1.5 0-2.1z'%3E%3C/path%3E%3C/svg%3E") no-repeat center;
+      background-size: 20px;
+    }
+
+    .search .icon {
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23e0e0e0' d='M19.6 21l-6.3-6.3q-.75.6-1.725.95-1.8.75-3.825.75-4.3 0-7.3-3.05-3-3.05-3-7.35 0-4.3 3.05-7.3 3.05-3.05 7.35-3.05 4.3 0 7.35 3.05 3.05 3.05 3.05 7.35 0 2.025-.75 3.825-.35.975-.95 1.725l6.3 6.3z'%3E%3C/path%3E%3C/svg%3E") no-repeat center;
+      background-size: 18px;
+    }
+
+    .explore .icon {
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23e0e0e0' d='M12 2C8.69 2 6 4.69 6 8s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4z'%3E%3C/path%3E%3Ccircle cx='18' cy='6' r='2' fill='%23e0e0e0'%3E%3C/circle%3E%3Ccircle cx='18' cy='18' r='2' fill='%23e0e0e0'%3E%3C/circle%3E%3Ccircle cx='6' cy='18' r='2' fill='%23e0e0e0'%3E%3C/circle%3E%3C/svg%3E") no-repeat center;
+      background-size: 24px;
+    }
+
+    .reels .icon {
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23e0e0e0' d='M20 8.5v7c0 1.4-1.1 2.5-2.5 2.5h-11C5.1 18 4 16.9 4 15.5v-7C4 7.1 5.1 6 6.5 6h11C18.9 6 20 7.1 20 8.5zM7 10.5l5 3 5-3-5-3z'%3E%3C/path%3E%3C/svg%3E") no-repeat center;
+      background-size: 22px;
+    }
+
+    .heart .icon {
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23e0e0e0' d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'%3E%3C/path%3E%3C/svg%3E") no-repeat center;
+      background-size: 20px;
+    }
+
+    .plus .icon {
+      width: 24px;
+      height: 24px;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23e0e0e0' d='M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z'%3E%3C/path%3E%3C/svg%3E") no-repeat center;
+      background-size: 20px;
+    }
+
+    .profile .icon {
+      width: 20px;
+      height: 20px;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23e0e0e0' d='M12 2C14.76 2 17 4.24 17 7s-2.24 5-5 5-5-2.24-5-5 2.24-5 5-5zm0 8c1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3 1.34 3 3 3zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'%3E%3C/path%3E%3C/svg%3E") no-repeat center;
+      background-size: 18px;
+      border-radius: 50%;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .navbar {
+        padding: 0 16px;
+      }
+      .nav-center {
+        gap: 28px;
+      }
+      .logo a {
+        font-size: 26px;
+      }
+      .nav-center a, .nav-right a {
+        font-size: 15px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .nav-center {
+        gap: 20px;
+      }
+      .logo {
+        display: none;
+      }
+    }
+
+    /* Espacio debajo de la navbar */
+    .content {
+      margin-top: 70px;
+      padding: 20px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar Instagram Real (idéntica a la web oficial) -->
+  <nav class="navbar">
+    <!-- Logo -->
+    <div class="logo">
+      <a href="#">instagram</a>
+    </div>
+
+    <!-- Navegación central -->
+    <div class="nav-center">
+      <a href="#" class="home"><span class="icon"></span></a>
+      <a href="#" class="search"><span class="icon"></span></a>
+      <a href="#" class="explore">Explorar</a>
+      <a href="#" class="reels">Reels</a>
+    </div>
+
+    <!-- Navegación derecha -->
+    <div class="nav-right">
+      <a href="#" class="heart"><span class="icon"></span></a>
+      <a href="#" class="plus"><span class="icon"></span></a>
+      <a href="#" class="profile"><span class="icon"></span></a>
+    </div>
+  </nav>
+
+  {% block content %}
+    {% endblock %}
+
+  <!-- Contenido -->
+  <div class="content">
+    <h1 style="color: white; margin-top: 50px;">Instagram</h1>
+    <p style="color: #ccc;">Barra de navegación idéntica al diseño real, sin emojis, solo texto e iconos SVG embebidos.</p>
+    <p style="margin-top: 50vh; color: #777;">Desplázate para ver más contenido.</p>
+  </div>
+
+</body>
+</html>
