@@ -1,12 +1,15 @@
+
+
 {% extends "base.html" %}
 
 {% block content %}
     {% for post in object_list %}
 
     <ul>
-        <li> {{post.title}} </li>
-        <li> {{post.description}} </li>
-
+        <a href="{% url 'post_detail' post.pk %}">
+            <li> {{post.title}} </li>
+            <li> {{post.description}} </li>
+        </a>
     </ul>
 
     <hr>
