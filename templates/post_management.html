@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div style="max-width: 900px; margin: 30px auto; padding: 20px;">
+    <h2 style="font-size: 28px; font-weight: 400; margin-bottom: 30px; border-bottom: 2px solid #ddd; padding-bottom: 10px;">
+        Centro de Administración de Publicaciones
+    </h2>
+
+    <a href="{% url 'post_new' %}" style="display: block; width: 250px; padding: 10px; background-color: #f0c14b; border: 1px solid #a88734; border-radius: 4px; color: #111; font-weight: bold; cursor: pointer; text-align: center; margin-bottom: 30px; text-decoration: none; transition: background-color 0.2s;">
+        ➕ Crear una Nueva Publicación
+    </a>
+
+    <h3 style="font-size: 20px; margin-bottom: 15px;">Mis Publicaciones Existentes ({{ user_posts|length }})</h3>
+
+    <div style="border: 1px solid #ddd; border-radius: 8px; overflow: hidden; background-color: white;">
+        {% for post in user_posts %}
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px; border-bottom: 1px solid #eee;">
+                
+                <div style="flex-grow: 1;">
+                    <a href="{% url 'post_detail' post.pk %}" style="font-weight: 600; font-size: 16px; color: #007185; text-decoration: none;">
+                        {{ post.title }} 
+                    </a>
+                    <span style="font-size: 12px; color: #555; margin-left: 10px;">(${{ post.price|floatformat:2 }})</span>
+                </div>
+                
+                <div style="display: flex; gap: 10px; align-items: center;">
+                    <a href="{% url 'post_edit' post.pk %}" style="padding: 6px 12px; background-color: #007185; color: white; text-decoration: none; border-radius: 4px; font-weight: 500; font-size: 13px;">
+                        Editar ✎
+                    </a>
+                    <a href="{% url 'post_delete' post.pk %}" style="padding: 6px 12px; background-color: #cc0c39; color: white; text-decoration: none; border-radius: 4px; font-weight: 500; font-size: 13px;" onclick="return confirm('¿Estás seguro de que quieres eliminar este post?');">
+                        Eliminar 🗑️
+                    </a>
+                </div>
+            </div>
+        {% empty %}
+            <p style="padding: 15px; color: #777;">Aún no has creado ninguna publicación. ¡Haz clic en 'Crear una Nueva Publicación' arriba!</p>
+        {% endfor %}
+    </div>
+
+</div>
+{% endblock %}

@@ -12,6 +12,17 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 
+LOGIN_REDIRECT_URL = 'home'
+LANGUAGE_CODE = 'es' # Opcionalmente puedes cambiar 'en-us' por 'es'
+
+TIME_ZONE = 'UTC'
+
+USE_I18N = True # Asegúrate de que esto esté en True
+
+USE_L10N = True
+
+USE_TZ = True
+
 
 
 
@@ -47,6 +58,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_app',
+    'authentication',
+
 
 ]
 
