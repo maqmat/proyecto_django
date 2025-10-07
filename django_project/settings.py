@@ -12,29 +12,13 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 
-LOGIN_REDIRECT_URL = 'home'
-LANGUAGE_CODE = 'es' # Opcionalmente puedes cambiar 'en-us' por 'es'
-
-TIME_ZONE = 'UTC'
-
-USE_I18N = True # Asegúrate de que esto esté en True
-
-USE_L10N = True
-
-USE_TZ = True
-
-
-
+# Configuración de URLs para autenticación
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/' # Redirige al inicio después de cerrar sesión
+AUTH_USER_MODEL = 'auth.User' # Usa el modelo de usuario por defecto
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-# Al final del archivo
-
-
-
-# Ruta base para archivos de medios (imágenes, archivos, etc.)
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
@@ -45,12 +29,13 @@ SECRET_KEY = 'django-insecure-3cfzaeqv8fn!siehb!(lno30d=bh8bgp3p+s$_@9#!mm(y@3j2
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*'] # Cambia esto por tu dominio en producción
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    # Core Django Apps
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -59,8 +44,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_app',
     'authentication',
-
-
 ]
 
 MIDDLEWARE = [
@@ -78,10 +61,12 @@ ROOT_URLCONF = 'django_project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],
+        # Busca plantillas en la carpeta 'templates' de la raíz del proyecto
+        'DIRS': [BASE_DIR / 'templates'], 
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
@@ -126,24 +111,43 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
-
+LANGUAGE_CODE = 'es-es' # Usando español
 TIME_ZONE = 'UTC'
 
-USE_I18N = True
-
+USE_I18N = True 
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.2/howto/static-files/
+# =================================================================
+# 3. CONFIGURACIÓN DE ARCHIVOS ESTÁTICOS Y MULTIMEDIA (CORREGIDO)
+# =================================================================
 
-STATIC_URL = 'static/'
+# URL base para servir archivos estáticos (CSS, JS)
+STATIC_URL = '/static/'
+
+# DIRECTORIO DE COLECCIÓN: Carpeta donde 'collectstatic' reunirá todo (para producción)
+# Esto crea la carpeta 'static' en la raíz del proyecto.
+STATIC_ROOT = BASE_DIR / 'static' 
+
+# RUTA DE DESARROLLO: Directorios donde Django buscará archivos estáticos
+# (si tienes CSS/JS globales fuera de la carpeta 'static' de tus apps)
+# STATICFILES_DIRS = [
+#     BASE_DIR / 'static_root_project',
+# ]
+
+
+# URL para servir archivos multimedia (imágenes de usuario)
+# NOTA: Usamos '/media/' para desarrollo local. No debe ser '/static/...'.
+MEDIA_URL = '/media/' 
+
+# DIRECTORIO FÍSICO: La ubicación donde se guardan las imágenes.
+# ANIDAMOS 'media' dentro de 'static' para simplificar el despliegue en PythonAnywhere.
+MEDIA_ROOT = STATIC_ROOT / 'media' 
+
+# =================================================================
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'

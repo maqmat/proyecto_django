@@ -12,4 +12,5 @@ urlpatterns = [
 ]
 
 if settings.DEBUG:
+    # Agrega la ruta para archivos multimedia (subidos por el usuario)
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
